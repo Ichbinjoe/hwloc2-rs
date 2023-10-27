@@ -239,7 +239,7 @@ impl fmt::Display for TopologyObject {
                                          separator_ptr,
                                          0);
 
-            CString::from_raw(separator_ptr);
+            let _ = CString::from_raw(separator_ptr);
 
             write!(f,
                    "{} ({})",
