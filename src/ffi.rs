@@ -458,6 +458,21 @@ extern "C" {
                                 -> c_int;
     pub fn hwloc_bitmap_isfull(bitmap: *const IntHwlocBitmap) -> c_int;
     pub fn hwloc_bitmap_next(bitmap: *const IntHwlocBitmap, prev: c_int) -> c_int;
+    pub fn hwloc_bitmap_or(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
+    pub fn hwloc_bitmap_and(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
+    pub fn hwloc_bitmap_xor(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
 
     pub fn hwloc_obj_type_string(object_type: ObjectType) -> *const c_char;
     pub fn hwloc_obj_type_snprintf(into: *mut c_char,
@@ -665,6 +680,21 @@ extern "C" {
                                 -> c_int;
     pub fn hwloc_bitmap_isfull(bitmap: *const IntHwlocBitmap) -> c_int;
     pub fn hwloc_bitmap_next(bitmap: *const IntHwlocBitmap, prev: c_int) -> c_int;
+    pub fn hwloc_bitmap_or(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
+    pub fn hwloc_bitmap_and(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
+    pub fn hwloc_bitmap_xor(
+        result: *mut IntHwlocBitmap,
+        left: *const IntHwlocBitmap,
+        right: *const IntHwlocBitmap,
+    );
 
     pub fn hwloc_obj_type_string(object_type: ObjectType) -> *const c_char;
     pub fn hwloc_obj_type_snprintf(into: *mut c_char,

@@ -1,10 +1,11 @@
 use ffi;
 use libc::c_char;
-use std::{fmt, ptr};
-use std::ffi::CStr;
-use std::ops::Not;
 use std::clone::Clone;
+use std::ffi::CStr;
 use std::iter::FromIterator;
+use std::ops::{BitAnd, BitOr, BitXor, Not};
+use std::ops::{BitAndAssign, BitOrAssign, BitXorAssign};
+use std::{fmt, ptr};
 
 pub enum IntHwlocBitmap {}
 
@@ -368,6 +369,126 @@ impl Not for Bitmap {
     }
 }
 
+impl BitOr<Bitmap> for Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitor(self, rhs: Self) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_or(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitOr<&Bitmap> for &Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitor(self, rhs: &Bitmap) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_or(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitOrAssign<Self> for Bitmap {
+    fn bitor_assign(&mut self, rhs: Self) {
+        let mut next = (&*self) | (&rhs);
+        std::mem::swap(self, &mut next);
+    }
+}
+
+impl BitOrAssign<&Self> for Bitmap {
+    fn bitor_assign(&mut self, rhs: &Self) {
+        let mut next = (&*self) | rhs;
+        std::mem::swap(self, &mut next);
+    }
+}
+
+impl BitAnd<Bitmap> for Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitand(self, rhs: Self) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_and(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitAnd<&Bitmap> for &Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitand(self, rhs: &Bitmap) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_and(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitAndAssign<Self> for Bitmap {
+    fn bitand_assign(&mut self, rhs: Self) {
+        let mut next = (&*self) & (&rhs);
+        std::mem::swap(self, &mut next);
+    }
+}
+
+impl BitAndAssign<&Self> for Bitmap {
+    fn bitand_assign(&mut self, rhs: &Self) {
+        let mut next = (&*self) & rhs;
+        std::mem::swap(self, &mut next);
+    }
+}
+
+impl BitXor<Bitmap> for Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_xor(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitXor<&Bitmap> for &Bitmap {
+    type Output = Bitmap;
+
+    // Required method
+    fn bitxor(self, rhs: &Bitmap) -> Self::Output {
+        unsafe {
+            let result = ffi::hwloc_bitmap_alloc();
+            ffi::hwloc_bitmap_xor(result, self.bitmap, rhs.bitmap);
+            Bitmap::from_raw(result, true)
+        }
+    }
+}
+
+impl BitXorAssign<Self> for Bitmap {
+    fn bitxor_assign(&mut self, rhs: Self) {
+        let mut next = (&*self) ^ (&rhs);
+        std::mem::swap(self, &mut next);
+    }
+}
+
+impl BitXorAssign<&Self> for Bitmap {
+    fn bitxor_assign(&mut self, rhs: &Self) {
+        let mut next = (&*self) ^ rhs;
+        std::mem::swap(self, &mut next);
+    }
+}
+
 impl Drop for Bitmap {
     fn drop(&mut self) {
         if self.manage {
@@ -461,6 +582,101 @@ impl Default for Bitmap {
 mod tests {
 
     use super::*;
+
+    #[test]
+    fn should_bitwise_and_two_bitmaps() {
+        // {1, 2, 3} & {2, 3, 4, 5} -> {2, 3}
+
+        let lhs = Bitmap::from_iter([1, 2, 3]);
+        let rhs = Bitmap::from_iter([2, 3, 4, 5]);
+
+        assert_eq!(lhs.weight(), 3);
+        assert_eq!(rhs.weight(), 4);
+
+        // perform bitwise and in several ways
+        let u1 = (&lhs) & (&rhs);
+        let u2 = lhs.clone() & rhs.clone();
+        let mut u3 = Bitmap::full();
+        u3 &= &lhs;
+        u3 &= &rhs;
+        let mut u4 = Bitmap::full();
+        u4 &= lhs.clone();
+        u4 &= rhs.clone();
+
+        // verify results
+        for u in [u1, u2, u3, u4] {
+            assert_eq!(u.weight(), 2);
+            for idx in [2, 3] {
+                assert!(u.is_set(idx));
+            }
+            assert!(!u.is_set(1));
+            assert!(!u.is_set(4));
+            assert!(!u.is_set(5));
+        }
+    }
+
+    #[test]
+    fn should_bitwise_or_two_bitmaps() {
+        // {1, 2, 3} | {2, 3, 4, 5} -> {1, 2, 3, 4, 5}
+
+        let lhs = Bitmap::from_iter([1, 2, 3]);
+        let rhs = Bitmap::from_iter([2, 3, 4, 5]);
+
+        assert_eq!(lhs.weight(), 3);
+        assert_eq!(rhs.weight(), 4);
+
+        // perform bitwise and in several ways
+        let u1 = (&lhs) | (&rhs);
+        let u2 = lhs.clone() | rhs.clone();
+        let mut u3 = Bitmap::new();
+        u3 |= &lhs;
+        u3 |= &rhs;
+        let mut u4 = Bitmap::new();
+        u4 |= lhs.clone();
+        u4 |= rhs.clone();
+
+        // verify results
+        for u in [u1, u2, u3, u4] {
+            assert_eq!(u.weight(), 5);
+            for idx in [1, 2, 3, 4, 5] {
+                assert!(u.is_set(idx));
+            }
+            assert!(!u.is_set(0));
+            assert!(!u.is_set(6));
+        }
+    }
+
+    #[test]
+    fn should_bitwise_xor_two_bitmaps() {
+        // {1, 2, 3} ^ {2, 3, 4, 5} -> {1, 4, 5}
+
+        let lhs = Bitmap::from_iter([1, 2, 3]);
+        let rhs = Bitmap::from_iter([2, 3, 4, 5]);
+
+        assert_eq!(lhs.weight(), 3);
+        assert_eq!(rhs.weight(), 4);
+
+        // perform bitwise and in several ways
+        let u1 = (&lhs) ^ (&rhs);
+        let u2 = lhs.clone() ^ rhs.clone();
+        let mut u3 = lhs.clone();
+        u3 ^= &rhs;
+        let mut u4 = rhs.clone();
+        u4 ^= lhs.clone();
+
+        // verify results
+        for u in [u1, u2, u3, u4] {
+            dbg!(&u);
+            assert_eq!(u.weight(), 3);
+            for idx in [1, 4, 5] {
+                assert!(u.is_set(idx));
+            }
+            assert!(!u.is_set(0));
+            assert!(!u.is_set(2));
+            assert!(!u.is_set(3));
+            assert!(!u.is_set(6));
+        }
+    }
 
     #[test]
     fn should_check_if_bitmap_is_empty() {
