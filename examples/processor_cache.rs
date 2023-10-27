@@ -1,6 +1,6 @@
-extern crate hwloc;
+extern crate hwloc2;
 
-use hwloc::{Topology, ObjectType};
+use hwloc2::{Topology, ObjectType};
 
 /// Compute the amount of cache that the first logical processor
 /// has above it.

@@ -16,15 +16,15 @@
 //! Next, add this to your crate root:
 //!
 //! ```no_run
-//! extern crate hwloc;
+//! extern crate hwloc2;
 //! ```
 //!
 //! Here is a quick example which walks the `Topology` and prints it out:
 //!
 //! ```no_run
-//! extern crate hwloc;
+//! extern crate hwloc2;
 //!
-//! use hwloc::Topology;
+//! use hwloc2::Topology;
 //!
 //! fn main() {
 //! 	let topo = Topology::new().unwrap();
@@ -132,7 +132,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::Topology;
+    /// use hwloc2::Topology;
     ///
     /// let topology = Topology::new();
     /// ```
@@ -168,7 +168,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology, TopologyFlag};
+    /// use hwloc2::{Topology, TopologyFlag};
     ///
     /// let topology = Topology::with_flags(vec![TopologyFlag::IsThisSystem]);
     /// ```
@@ -214,7 +214,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology,TopologyFlag};
+    /// use hwloc2::{Topology,TopologyFlag};
     ///
     /// let default_topology = Topology::new().unwrap();
     /// assert_eq!(0, default_topology.flags().len());
@@ -243,7 +243,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::Topology;
+    /// use hwloc2::Topology;
     ///
     /// let topology = Topology::new().unwrap();
     /// assert!(topology.depth() > 0);
@@ -257,7 +257,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology,ObjectType};
+    /// use hwloc2::{Topology,ObjectType};
     ///
     /// let topology = Topology::new().unwrap();
     ///
@@ -327,7 +327,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology,ObjectType};
+    /// use hwloc2::{Topology,ObjectType};
     ///
     /// let topology = Topology::new().unwrap();
     ///
@@ -355,7 +355,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::Topology;
+    /// use hwloc2::Topology;
     ///
     /// let topology = Topology::new().unwrap();
     ///
@@ -381,7 +381,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology,TopologyObject};
+    /// use hwloc2::{Topology,TopologyObject};
     ///
     /// let topology = Topology::new().unwrap();
     ///
@@ -398,7 +398,7 @@ impl Topology {
     /// # Examples
     ///
     /// ```
-    /// use hwloc::{Topology,ObjectType};
+    /// use hwloc2::{Topology,ObjectType};
     ///
     /// let topology = Topology::new().unwrap();
     ///
