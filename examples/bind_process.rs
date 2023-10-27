@@ -1,11 +1,11 @@
-extern crate hwloc;
+extern crate hwloc2;
 extern crate libc;
 #[cfg(target_os = "windows")]
 extern crate winapi;
 #[cfg(target_os = "windows")]
 extern crate kernel32;
 
-use hwloc::{Topology, CpuBindFlags, TopologyObject, ObjectType};
+use hwloc2::{Topology, CpuBindFlags, TopologyObject, ObjectType};
 
 /// Example which binds an arbitrary process (in this example this very same one) to
 /// the last core.

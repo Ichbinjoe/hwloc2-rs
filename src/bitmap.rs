@@ -33,7 +33,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::new();
     /// assert_eq!("", format!("{}", bitmap));
@@ -52,7 +52,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::full();
     /// assert_eq!("0-", format!("{}", bitmap));
@@ -71,7 +71,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::from(1);
     /// assert_eq!("1", format!("{}", bitmap));
@@ -88,7 +88,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::from_range(0, 5);
     /// assert_eq!("0-5", format!("{}", bitmap));
@@ -120,7 +120,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// bitmap.set(4);
@@ -137,7 +137,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// bitmap.set_range(3, 5);
@@ -155,7 +155,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::from_range(1,3);
     /// bitmap.unset(1);
@@ -172,7 +172,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::from_range(1,5);
     /// bitmap.unset_range(4,6);
@@ -190,7 +190,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::from_range(1,5);
     /// assert_eq!(5, bitmap.weight());
@@ -206,7 +206,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::from_range(1,5);
     /// assert_eq!(5, bitmap.weight());
@@ -225,7 +225,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// assert_eq!(true, bitmap.is_empty());
@@ -246,7 +246,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// assert_eq!(false, bitmap.is_set(2));
@@ -267,7 +267,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// bitmap.set_range(0, 127);
@@ -291,7 +291,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let mut bitmap = Bitmap::new();
     /// bitmap.set(3);
@@ -310,7 +310,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::from_range(4,10);
     /// assert_eq!(4, bitmap.first());
@@ -326,7 +326,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let bitmap = Bitmap::from_range(4,10);
     /// assert_eq!(10, bitmap.last());
@@ -340,7 +340,7 @@ impl Bitmap {
     /// Examples:
     ///
     /// ```
-    /// use hwloc::Bitmap;
+    /// use hwloc2::Bitmap;
     ///
     /// let empty_bitmap = Bitmap::new();
     /// assert_eq!(false, empty_bitmap.is_full());

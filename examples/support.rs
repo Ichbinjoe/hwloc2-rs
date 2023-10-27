@@ -1,6 +1,6 @@
-extern crate hwloc;
+extern crate hwloc2;
 
-use hwloc::Topology;
+use hwloc2::Topology;
 
 /// Example on how to check for specific topology support of a feature.
 fn main() {
